@@ -3,7 +3,7 @@
 
 .SH "NAME"
 .PP
-miflora\-prom \- generate prometheus metrics from Xiaomi Mi flower care plant sensor.
+miflora\-prom \- generate prometheus metrics from Xiaomi Mi flower care plant sensor
 
 .SH "SYNOPSIS"
 .PP
@@ -32,7 +32,7 @@ ground conductivity, \fB\fCmiflora_plant_conductivity{name="<alias>"}\fR
 
 .PP
 When running as a non\-root user the following capabilities are needed:
-'cap_net_raw,cap_net_admin+eip' for \fB\fCmiflora-prom\fR to accessing bluetooth.
+'CAP_NET_RAW' and 'CAP_NET_ADMIN' for \fB\fCmiflora-prom\fR to accessing bluetooth and sending packets.
 
 .PP
 Under Linux, the application uses the mac address to connect to devices; under MacOs the UUID.
@@ -40,7 +40,7 @@ Under Linux, the application uses the mac address to connect to devices; under M
 .SH "CONFIG FILE"
 .PP
 The configuration file contains lines constisting of a \fB\fCLHS <colon> RHS\fR. It defines the MAC
-addreses of UUIDs of the sensors to be queried and two other variables:
+addreses or UUIDs of the sensors to be queried and two other variables:
 
 .PP
 .RS
@@ -50,6 +50,7 @@ addreses of UUIDs of the sensors to be queried and two other variables:
 adapter: default
 # how often to query the sensors
 duration: 1h
+# the sensor's aliases and their uuid or mac address
 myfirstsensor: 422b23155c369dfee0aea210d1a9bc37
 mysecondsensor: ...
 
