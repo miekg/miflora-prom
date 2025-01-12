@@ -1,6 +1,6 @@
 # NAME
 
-miflora-prom - generate prometheus metrics from Xiaomi Mi flower care plant sensor.
+miflora-prom - generate prometheus metrics from Xiaomi Mi flower care plant sensor
 
 # SYNOPSIS
 
@@ -28,12 +28,13 @@ Under Linux, the application uses the mac address to connect to devices; under M
 ## Config file
 
 The configuration file contains lines constisting of a `LHS <colon> RHS`. It defines the MAC
-addreses of UUIDs of the sensors to be queried and two other variables:
+addreses or UUIDs of the sensors to be queried and two other variables:
 
     # adapter, defaults to 'default'
     adapter: default
     # how often to query the sensors
     duration: 1h
+    # the sensor's aliases and their uuid or mac address
     myfirstsensor: 422b23155c369dfee0aea210d1a9bc37
     mysecondsensor: ...
 
