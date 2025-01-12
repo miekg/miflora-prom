@@ -1,4 +1,4 @@
-module github.com/darox/miflora-go
+module github.com/miekg/miflora-prom
 
 go 1.19
 

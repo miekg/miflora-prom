@@ -1,41 +1,44 @@
-# miflora-go
+# NAME
 
-A Golang application for reading data from Xiaomi Mi Flora plant sensors and exporting the values
-at prometheus metrics. Retrieves data from the sensor, such as battery, humidity, conductivity, soil
-moisture and temperature.
+miflora-prom - generate prometheus metrics from Xiaomi Mi flower care plant sensor.
 
-Configuration is done via a small text file that has that lives in /etc/miflora.
+# SYNOPSIS
 
-    alias:mac-address
+**miflora-prom**
 
-or
+# DESCRIPTION
 
-    alias:uuid
+miflora-prom is a small application that connects to a Xiami Mi flower plant sensor over blue tooth
+and converts the sensor data into prometheus metrics. If needs a config file in `/etc/miflora` to
+operate.
 
-lines, the alias is used in the prometheus metrics. The following ones are exported:
+The data retrieved and the prometheus metrics are:
 
-* `miflora_meta_battery_percentage{name="<alias>"}`
-* `miflora_meta_firmware_version{name="<alias>", version="<version>"}`
-* `miflora_plant_illumination_lux{name="<alias>"}`
-* `miflora_plant_moisture_percentage{name="<alias>"}`
-* `miflora_plant_conductivity{name="<alias>"}`
+* battery level, `miflora_meta_battery_percentage{name="<alias>"}`
+* firmware version, `miflora_meta_firmware_version{name="<alias>", version="<version>"}`
+* illumination level in Lux, `miflora_plant_illumination_lux{name="<alias>"}`
+* moisture percentage, `miflora_plant_moisture_percentage{name="<alias>"}`
+* ground conductivity, `miflora_plant_conductivity{name="<alias>"}`
 
-## Installation
-
-1. Install Golang on your computer if you don't have it already installed
-2. Clone the repository: `git clone https://github.com/darox/miflora-go`
-3. Build the application: `cd cmd/miflora-go && go build`
-4. Add capabilities to run as none-root user: `sudo setcap 'cap_net_raw,cap_net_admin+eip' miflora-go`
-
-## Usage
+When running as a non-root user the following capabilities are needed:
+'cap_net_raw,cap_net_admin+eip' for `miflora-prom` to accessing bluetooth.
 
 Under Linux, the application uses the mac address to connect to devices; under MacOs the UUID.
 
-1. Copy `config/config.yaml` to the same folder where miflora-go will run or use the param `--config-path` to specify the path of the config file
-2. The application will now scan the device and printout the result
+## Config file
 
-### Acknowledgments
+The configuration file contains lines constisting of a `LHS <colon> RHS`. It defines the MAC
+addreses of UUIDs of the sensors to be queried and two other variables:
 
-- Xiaomi for creating the sensor
-- [Creators of go-ble](https://github.com/go-ble/ble)
-- [Creators of miflora wiki](https://github.com/ChrisScheffler/miflora/wiki/The-Basics)
+    # adapter, defaults to 'default'
+    adapter: default
+    # how often to query the sensors
+    duration: 1h
+    myfirstsensor: 422b23155c369dfee0aea210d1a9bc37
+    mysecondsensor: ...
+
+# Acknowledgments
+
+- Xiaomi for creating the sensor.
+- [Creators of go-ble](https://github.com/go-ble/ble).
+- [Creators of miflora wiki](https://github.com/ChrisScheffler/miflora/wiki/The-Basics).
