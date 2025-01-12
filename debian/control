@@ -1,0 +1,15 @@
+Section: utils
+Priority: extra
+Source: miflora-prom
+Maintainer: Miek Gieben <miek@miek.nl>
+Build-Depends: debhelper (>= 9), ca-certificates, curl, dh-sysuser, lsb-release
+Homepage: https://github.com/miekg/miflora-prom/tree/main
+
+Package: miflora-prom
+Architecture: any
+Pre-Depends: adduser, sysuser-helper
+Description: miflora-prom generates prometheus metrics from Xiaomi Mi flower care plant sensor.
+ miflora-prom is a small application that connects to a Xiami Mi flower plant sensor over blue tooth
+ and converts the sensor data into prometheus metrics. If needs a config file in /etc/miflora to
+ operate.
+ .

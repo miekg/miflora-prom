@@ -1,0 +1,15 @@
+[Unit]
+Description=Miflora-prom
+After=network.target
+
+[Service]
+Type=simple
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+NoNewPrivileges=true
+User=miflora
+ExecStart=/usr/bin/miflora-prom
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -21,7 +21,7 @@ The data retrieved and the prometheus metrics are:
 * ground conductivity, `miflora_plant_conductivity{name="<alias>"}`
 
 When running as a non-root user the following capabilities are needed:
-'cap_net_raw,cap_net_admin+eip' for `miflora-prom` to accessing bluetooth.
+'CAP_NET_RAW' and 'CAP_NET_ADMIN' for `miflora-prom` to accessing bluetooth and sending packets.
 
 Under Linux, the application uses the mac address to connect to devices; under MacOs the UUID.
 

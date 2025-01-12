@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+SOURCE_VERSION  := $(shell dpkg-parsechangelog --show-field version | sed  's/-[0-9]cncz[0-9][0-9]*//')
+SOURCE          := https://gitlab.science.ru.nl/cncz/go/-/archive/v$(SOURCE_VERSION)/go-v$(SOURCE_VERSION).tar.bz2
+BINARIES        := cmd/checkmkd/checkmkd
+GITROOT         := $(shell git rev-parse --show-toplevel)
+
+PKG_NAME        := $(shell dpkg-parsechangelog --show-field source)
+DOWNLOAD        := $(shell basename $(SOURCE) )
+
+%:
+	dh $@ --with systemd,sysuser
+
+override_dh_auto_configure:
+	dh_clean
+	if [ ! -f $(DOWNLOAD) ]; then curl -L $(SOURCE) > $(DOWNLOAD); fi
+	rm -rf pkg; mkdir pkg
+	tar xf $(DOWNLOAD) -C pkg --strip-components 1
+	for i in $(BINARIES); do ( cd pkg/`dirname $$i`; go get; $(GITROOT)/go-build -o `basename $$i` ); cp pkg/$$i .; done
+
+override_dh_auto_clean:
+	rm -rf debian/$(PKG_NAME)/usr/bin
+
+override_dh_auto_install:
+	mkdir -p debian/$(PKG_NAME)/usr/bin && \
+	for i in $(BINARIES); do cp `basename $$i` debian/$(PKG_NAME)/usr/bin ; done
+
+override_dh_strip:
