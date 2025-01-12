@@ -50,7 +50,7 @@ func main() {
 				mifloraBattery.WithLabelValues(r.Alias).Set(float64(r.System.Battery))
 				mifloraFirmware.WithLabelValues(r.Alias, r.System.Firmware).Set(1)
 
-				mifloraIllumination.WithLabelValues(r.Alias).Set(float64(r.Sensor.Illimination))
+				mifloraIllumination.WithLabelValues(r.Alias).Set(float64(r.Sensor.Illumination))
 				mifloraMoisture.WithLabelValues(r.Alias).Set(float64(r.Sensor.Moisture))
 				mifloraConductivity.WithLabelValues(r.Alias).Set(float64(r.Sensor.Conductivity))
 			}

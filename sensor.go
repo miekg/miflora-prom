@@ -135,7 +135,7 @@ func sensorReadings(cln ble.Client, p *ble.Profile) (sensor Sensor, err error) {
 	sensor = Sensor{
 		Conductivity: binary.LittleEndian.Uint16(b[8:10]),
 		Moisture:     uint16(b[7]),
-		Illimination: binary.LittleEndian.Uint32(b[3:7]),
+		Illumination: binary.LittleEndian.Uint32(b[3:7]),
 		Temperature:  float32(binary.LittleEndian.Uint16(b[0:2])) / subtrahend,
 	}
 	return sensor, nil
@@ -184,6 +184,6 @@ type System struct {
 type Sensor struct {
 	Conductivity uint16
 	Moisture     uint16
-	Illimination uint32
+	Illumination uint32
 	Temperature  float32
 }
