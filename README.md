@@ -1,25 +1,24 @@
 # miflora-go
 
-A Golang application for reading data from Xiaomi Mi Flora plant sensors.
+A Golang application for reading data from Xiaomi Mi Flora plant sensors and exporting the values
+at prometheus metrics. Retrieves data from the sensor, such as battery, humidity, conductivity, soil
+moisture and temperature.
 
-```
-📡  Scanning for Monstera
-✅  Connected to Monstera
-👋  Disconnected from Monstera
+Configuration is done via a small text file that has that lives in /etc/miflora.
 
-🪴  Name: Monstera 
-🔋  Battery Level: 33% 
-⚙️   Firmware: 3.2.2 
-🌡️  Temperature: 24.1°C 
-⚡   Light: 15533 Lux 
-💧  Moisture: 21% 
-🌱  Conductivity: 190 µS/cm 
-```
+    alias:mac-address
 
-## Features
+or
 
-- Configurable by YAML file
-- Retrieves data from the sensor, such as battery, humidity, conductivity, soil moisture and temperature.
+    alias:uuid
+
+lines, the alias is used in the prometheus metrics. The following ones are exported:
+
+* `miflora_meta_battery_percentage{name="<alias"}`
+* `miflora_meta_firmware_version{name="<alias"}`
+* `miflora_plant_illumination_lux{name="<alias"}`
+* `miflora_plant_moisture_percentage{name="<alias"}`
+* `miflora_plant_conductivity{name="<alias"}`
 
 ## Installation
 
@@ -28,26 +27,12 @@ A Golang application for reading data from Xiaomi Mi Flora plant sensors.
 3. Build the application: `cd cmd/miflora-go && go build`
 4. Add capabilities to run as none-root user: `sudo setcap 'cap_net_raw,cap_net_admin+eip' miflora-go`
 
-
 ## Usage
 
 Under Linux, the application uses the mac address to connect to devices; under MacOs the UUID.
 
-
 1. Copy `config/config.yaml` to the same folder where miflora-go will run or use the param `--config-path` to specify the path of the config file
 2. The application will now scan the device and printout the result
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch: git checkout -b my-new-feature
-3. Commit your changes: git commit -am 'Add some feature'
-4. Push to the branch: git push origin my-new-feature
-5. Submit a pull request
-
-### License
-
-BSD-3-Clause license
 
 ### Acknowledgments
 
