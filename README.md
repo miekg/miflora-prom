@@ -14,11 +14,11 @@ or
 
 lines, the alias is used in the prometheus metrics. The following ones are exported:
 
-* `miflora_meta_battery_percentage{name="<alias"}`
-* `miflora_meta_firmware_version{name="<alias"}`
-* `miflora_plant_illumination_lux{name="<alias"}`
-* `miflora_plant_moisture_percentage{name="<alias"}`
-* `miflora_plant_conductivity{name="<alias"}`
+* `miflora_meta_battery_percentage{name="<alias>"}`
+* `miflora_meta_firmware_version{name="<alias>", version="<version>"}`
+* `miflora_plant_illumination_lux{name="<alias>"}`
+* `miflora_plant_moisture_percentage{name="<alias>"}`
+* `miflora_plant_conductivity{name="<alias>"}`
 
 ## Installation
 

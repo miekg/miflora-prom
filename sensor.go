@@ -11,9 +11,7 @@ import (
 )
 
 func Readings(c Config) (readings []Reading, err error) {
-	// loop through devices
 	for alias, device := range c.Devices {
-		// check if device address follows the correct format.
 		filter := func(a ble.Advertisement) bool {
 			return strings.EqualFold(a.Addr().String(), device)
 		}
@@ -62,7 +60,7 @@ func Readings(c Config) (readings []Reading, err error) {
 	return readings, nil
 }
 
-// Enable read of temperature, humidity, light and conductivity
+// Enable read of temperature, humidity, light and conductivity.
 func (device *Device) enableSensorReadings(cln ble.Client, p *ble.Profile) (err error) {
 	// UUID service and characteristic to enable read
 	cu := ble.MustParse("00001a0000001000800000805f9b34fb")
@@ -84,7 +82,7 @@ func (device *Device) enableSensorReadings(cln ble.Client, p *ble.Profile) (err 
 	return nil
 }
 
-// Read the characteristics for battery level and firmware version
+// Read the characteristics for battery level and firmware version.
 func systemReadings(cln ble.Client, p *ble.Profile) (sys System, err error) {
 	// UUID service and characteristic to read battery level and firmware version
 	cu := ble.MustParse("00001a0200001000800000805f9b34fb")
@@ -109,7 +107,7 @@ func systemReadings(cln ble.Client, p *ble.Profile) (sys System, err error) {
 	return System{Battery: uint16(b[0]), Firmware: string(b[2:])}, nil
 }
 
-// Read the characteristic to get conductivity, humidity, light and temperature sensor data
+// Read the characteristic to get conductivity, humidity, light and temperature sensor data.
 func sensorReadings(cln ble.Client, p *ble.Profile) (sensor Sensor, err error) {
 	// UUID of service and characteristic holding the sensor data
 	cu := ble.MustParse("00001a0100001000800000805f9b34fb")
@@ -137,13 +135,13 @@ func sensorReadings(cln ble.Client, p *ble.Profile) (sensor Sensor, err error) {
 	sensor = Sensor{
 		Conductivity: binary.LittleEndian.Uint16(b[8:10]),
 		Moisture:     uint16(b[7]),
-		Light:        binary.LittleEndian.Uint32(b[3:7]),
+		Illimination: binary.LittleEndian.Uint32(b[3:7]),
 		Temperature:  float32(binary.LittleEndian.Uint16(b[0:2])) / subtrahend,
 	}
 	return sensor, nil
 }
 
-// Find the service based on the UUID
+// Find the service based on the UUID.
 func findService(p *ble.Profile, u ble.UUID) *ble.Service {
 	for _, s := range p.Services {
 		if s.UUID.Equal(u) {
@@ -153,7 +151,7 @@ func findService(p *ble.Profile, u ble.UUID) *ble.Service {
 	return nil
 }
 
-// Find the characteristic based on the UUID
+// Find the characteristic based on the UUID.
 func findCharacteristic(s *ble.Service, u ble.UUID) *ble.Characteristic {
 	for _, c := range s.Characteristics {
 		if c.UUID.Equal(u) {
@@ -186,6 +184,6 @@ type System struct {
 type Sensor struct {
 	Conductivity uint16
 	Moisture     uint16
-	Light        uint32
+	Illimination uint32
 	Temperature  float32
 }
