@@ -13,7 +13,7 @@ override_dh_auto_configure:
 	if [ ! -f $(DOWNLOAD) ]; then curl -L $(SOURCE) > $(DOWNLOAD); fi
 	rm -rf pkg; mkdir pkg
 	tar xf $(DOWNLOAD) -C pkg --strip-components 1
-	for i in $(BINARIES); do ( cd pkg/; make ); cp pkg/$$i .; done
+	for i in $(BINARIES); do ( cd pkg; CGO_ENABLED=0 go build ); cp pkg/$$i .; done
 
 override_dh_strip:
 
@@ -23,4 +23,5 @@ override_dh_auto_clean:
 override_dh_auto_install:
 	for i in $(BINARIES); do mkdir -p debian/`basename $$i`/usr/bin; done
 	for i in $(BINARIES); do cp `basename $$i` debian/`basename $$i`/usr/bin; done
+	mkdir -p debian/miflora-prom/etc/
 	cp debian/miflora debian/miflora-prom/etc/miflora
