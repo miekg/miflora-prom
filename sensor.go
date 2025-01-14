@@ -21,7 +21,7 @@ func Readings(c Config) (readings []Reading, err error) {
 
 		d := Device{Device: device, Identifier: alias}
 
-		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 2*time.Second))
+		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 10*time.Second))
 		cln, err := ble.Connect(ctx, filter)
 		if err != nil {
 			log.Printf("Failed to scan %s: %s", d.Identifier, err)
