@@ -1,3 +1,9 @@
+miflora-prom (0.0.3) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Miek Gieben <miek@miek.nl>  Tue, 14 Jan 2025 19:03:29 +0100
+
 miflora-prom (0.0.2) unstable; urgency=medium
 
   * New upstream release
