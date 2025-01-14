@@ -24,20 +24,19 @@ func ParseConfig(file string) (Config, error) {
 	}
 	defer f.Close()
 
-	c := Config{Adapter: "default", Duration: time.Hour}
+	c := Config{Adapter: "default", Duration: time.Hour, Devices: map[string]string{}}
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := scanner.Text()
-		// string colon string, with possible whitespace
 		if strings.HasPrefix(line, "#") {
 			continue
 		}
-		fields := strings.Split(line, ":")
-		if len(fields) != 2 {
+		left, right, ok := strings.Cut(line, ":")
+		if !ok {
 			continue
 		}
-		left := strings.TrimSpace(fields[0])
-		right := strings.TrimSpace(fields[1])
+		left = strings.TrimSpace(left)
+		right = strings.TrimSpace(right)
 
 		switch left {
 		case "adapter":
