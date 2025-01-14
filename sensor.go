@@ -13,7 +13,7 @@ import (
 
 func Readings(c Config) (readings []Reading, err error) {
 	for alias, device := range c.Devices {
-		log.Printf("Querying %s:%s", alias, device)
+		log.Printf("Querying %s %s", alias, device)
 
 		filter := func(a ble.Advertisement) bool {
 			return strings.EqualFold(a.Addr().String(), device)
@@ -24,7 +24,7 @@ func Readings(c Config) (readings []Reading, err error) {
 		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 2*time.Second))
 		cln, err := ble.Connect(ctx, filter)
 		if err != nil {
-			log.Printf("Failed to scan %s: %e", d.Identifier, err)
+			log.Printf("Failed to scan %s: %s", d.Identifier, err)
 			continue
 		}
 
