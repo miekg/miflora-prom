@@ -24,7 +24,7 @@ func Readings(c Config) (readings []Reading, err error) {
 		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 2*time.Second))
 		cln, err := ble.Connect(ctx, filter)
 		if err != nil {
-			log.Printf("Failed to scan %s: %ds", d.Identifier, err)
+			log.Printf("Failed to scan %s: %e", d.Identifier, err)
 			continue
 		}
 
