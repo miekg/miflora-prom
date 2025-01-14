@@ -20,6 +20,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if len(config.Devices) == 0 {
+		log.Fatalf("No devices found in config: %s", DefaultConfig)
+	}
+
+	log.Printf("Found %d device(s) from the config", len(config.Devices))
 
 	d, err := dev.NewDevice(config.Adapter)
 	if err != nil {
