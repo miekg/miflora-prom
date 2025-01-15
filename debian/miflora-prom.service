@@ -10,6 +10,8 @@ NoNewPrivileges=true
 User=miflora
 ExecStart=/usr/bin/miflora-prom
 Restart=on-failure
+StartLimitIntervalSec=400
+StartLimitBurst=3
 
 [Install]
 WantedBy=multi-user.target
