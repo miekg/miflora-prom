@@ -48,6 +48,7 @@ func main() {
 			readings, err := Readings(config)
 			if err != nil {
 				log.Printf("Failed to get readings: %s", err)
+				// metrics here too
 				continue
 			}
 
