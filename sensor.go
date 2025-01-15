@@ -34,22 +34,28 @@ func Readings(c Config) (readings []Reading, err error) {
 		if err != nil {
 			cln.CancelConnection()
 			log.Printf("Failed to discover profile: %s", err)
+			continue
 		}
 
 		err = d.enableSensorReadings(cln, p)
 		if err != nil {
+			cln.CancelConnection()
 			log.Printf("Failed to enable sensor read: %s", err)
 			continue
 		}
 
 		sys, err := systemReadings(cln, p)
 		if err != nil {
+			cln.CancelConnection()
 			log.Printf("Failed to read system: %s", err)
+			continue
 		}
 
 		sensor, err := sensorReadings(cln, p)
 		if err != nil {
+			cln.CancelConnection()
 			log.Printf("Failed to read sensors: %s", err)
+			continue
 		}
 
 		r := Reading{Alias: alias, System: sys, Sensor: sensor}
