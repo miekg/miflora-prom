@@ -14,6 +14,7 @@ import (
 func Readings(c Config) (readings []Reading, err error) {
 	for alias, device := range c.Devices {
 		log.Printf("Querying %s %s", alias, device)
+		time.Sleep(1 * time.Second) // pass the queries a little, BT stack seems brittle
 
 		filter := func(a ble.Advertisement) bool {
 			return strings.EqualFold(a.Addr().String(), device)
