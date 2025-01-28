@@ -59,7 +59,7 @@ func main() {
 				mifloraIllumination.WithLabelValues(r.Alias).Set(float64(r.Sensor.Illumination))
 				mifloraMoisture.WithLabelValues(r.Alias).Set(float64(r.Sensor.Moisture))
 				mifloraConductivity.WithLabelValues(r.Alias).Set(float64(r.Sensor.Conductivity))
-				mifloraTempurature.WithLabelValues(r.Alias).Set(float64(r.Sensor.Temperature))
+				mifloraTemperature.WithLabelValues(r.Alias).Set(float64(r.Sensor.Temperature))
 			}
 		}
 	}()
@@ -90,8 +90,8 @@ var (
 		Name: "miflora_plant_conductivity",
 		Help: "The current conductivity level in µS/cm",
 	}, []string{"name"})
-	mifloraTempurature = promauto.NewGaugeVec(prometheus.GaugeOpts{
-		Name: "miflora_plant_tempurature_celcius",
+	mifloraTemperature = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "miflora_plant_temperature_celsius",
 		Help: "The current temperature in °C",
 	}, []string{"name"})
 )
